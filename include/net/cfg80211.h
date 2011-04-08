@@ -515,6 +515,7 @@ struct sta_bss_parameters {
  * Station information filled by driver for get_station() and dump_station.
  *
  * @filled: bitflag of flags from &enum station_info_flags
+ * @connected_time: time(in secs) since a station is last connected
  * @inactive_time: time since last station activity (tx/rx) in milliseconds
  * @rx_bytes: bytes received from this station
  * @tx_bytes: bytes transmitted to this station
@@ -542,6 +543,7 @@ struct sta_bss_parameters {
  */
 struct station_info {
 	u32 filled;
+	u32 connected_time;
 	u32 inactive_time;
 	u32 rx_bytes;
 	u32 tx_bytes;
