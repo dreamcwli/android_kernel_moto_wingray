@@ -4437,9 +4437,6 @@ static s32 wl_setup_wiphy(struct wireless_dev *wdev, struct device *sdiofunc_dev
 #endif				/* !WL_POWERSAVE_DISABLED */
 	wdev->wiphy->flags |= WIPHY_FLAG_NETNS_OK |
 		WIPHY_FLAG_4ADDR_AP |
-#if LINUX_VERSION_CODE <= KERNEL_VERSION(2, 6, 39)
-		WIPHY_FLAG_SUPPORTS_SEPARATE_DEFAULT_KEYS |
-#endif
 		WIPHY_FLAG_4ADDR_STATION;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0)
 	wdev->wiphy->flags |= WIPHY_FLAG_SUPPORTS_FW_ROAM;
