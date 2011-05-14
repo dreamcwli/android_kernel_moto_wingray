@@ -1096,6 +1096,8 @@ static void __exit ieee80211_exit(void)
 		ieee80211s_stop();
 
 	ieee80211_iface_exit();
+
+	rcu_barrier();
 }
 
 
