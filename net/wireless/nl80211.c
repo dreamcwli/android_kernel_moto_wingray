@@ -3577,6 +3577,7 @@ static int nl80211_start_sched_scan(struct sk_buff *skb,
 	if (info->attrs[NL80211_ATTR_SCAN_SSIDS]) {
 		nla_for_each_nested(attr, info->attrs[NL80211_ATTR_SCAN_SSIDS],
 				    tmp) {
+			request->ssids[i].ssid_len = nla_len(attr);
 			if (request->ssids[i].ssid_len >
 			    IEEE80211_MAX_SSID_LEN) {
 				err = -EINVAL;
@@ -3584,7 +3585,6 @@ static int nl80211_start_sched_scan(struct sk_buff *skb,
 			}
 			memcpy(request->ssids[i].ssid, nla_data(attr),
 			       nla_len(attr));
-			request->ssids[i].ssid_len = nla_len(attr);
 			i++;
 		}
 	}
