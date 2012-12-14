@@ -36,6 +36,12 @@ config IOSCHED_CFQ
 
 	  Note: If BLK_CGROUP=m, then CFQ can be built only as module.
 
+config IOSCHED_SIO
+	tristate "Simple I/O scheduler"
+        default y
+        ---help---
+          Simple I/O scheduler based on No-op, Deadline and V(R) I/O schedulers.
+
 config CFQ_GROUP_IOSCHED
 	bool "CFQ Group Scheduling support"
 	depends on IOSCHED_CFQ && BLK_CGROUP
@@ -50,6 +56,9 @@ choice
 	  Select the I/O scheduler which will be used by default for all
 	  block devices.
 
+        config DEFAULT_SIO
+                bool "SIO" if IOSCHED_SIO=y
+
 	config DEFAULT_DEADLINE
 		bool "Deadline" if IOSCHED_DEADLINE=y
 
@@ -63,6 +72,7 @@ endchoice
 
 config DEFAULT_IOSCHED
 	string
+        default "sio" if DEFAULT_SIO
 	default "deadline" if DEFAULT_DEADLINE
 	default "cfq" if DEFAULT_CFQ
 	default "noop" if DEFAULT_NOOP
