@@ -666,10 +666,14 @@ u32 tegra_dc_incr_syncpt_max(struct tegra_dc *dc)
 void tegra_dc_incr_syncpt_min(struct tegra_dc *dc, u32 val)
 {
 	mutex_lock(&dc->lock);
+	nvhost_module_busy(&dc->ndev->host->mod);
 	while (dc->syncpt_min < val) {
 		dc->syncpt_min++;
-		nvhost_syncpt_cpu_incr(&dc->ndev->host->syncpt, dc->syncpt_id);
+		if (nvhost_module_powered(&dc->ndev->host->mod)) {
+			nvhost_syncpt_cpu_incr(&dc->ndev->host->syncpt, dc->syncpt_id);
+		}
 	}
+	nvhost_module_idle(&dc->ndev->host->mod);
 	mutex_unlock(&dc->lock);
 }
 
